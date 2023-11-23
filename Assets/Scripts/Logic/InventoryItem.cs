@@ -8,4 +8,5 @@ public class InventoryItem
     public GameObject view;
     public bool isStackable;
     public int count;
+    public int stackSize;
 }

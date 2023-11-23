@@ -10,17 +10,18 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] LayerMask layerMask;
 
     Transform blockHighlight;
+    Player player;
 
     private void Start()
     {
         blockHighlight = Instantiate(blockHighlightPrefab, Vector3.zero, Quaternion.identity);
 
-        EventsHolder.playerSpawnedMine?.Invoke(GetComponent<Player>());
+        player = GetComponent<Player>();
+        EventsHolder.playerSpawnedMine?.Invoke(player);
     }
 
     private void Update()
     {
-  
         BlockRaycast();
     }
 
@@ -94,6 +95,8 @@ public class PlayerBehaviour : MonoBehaviour
 
                 //isHit = true;
             }
+
+            PlaceBlock(blockPosition + hit.normal);
 
             //if (Input.GetMouseButtonUp(0) && isHit)
             //{
@@ -191,6 +194,51 @@ public class PlayerBehaviour : MonoBehaviour
         else
         {
             blockHighlight.position = default;
+        }
+    }
+
+    void PlaceBlock(Vector3 blockPosition)
+    {
+        if (Input.GetMouseButtonDown(1) && player.inventory.CurrentSelectedItem != null)
+        {
+            var item = player.inventory.CurrentSelectedItem;
+            // зачем-то нужно прибавл€ть 1 по оси X, хз почему так, но именно так работает
+            var generator = WorldGenerator.Inst;
+            var chunck = generator.GetChunk(blockPosition + Vector3.right);
+            var pos = chunck.renderer.transform.position;
+
+            int xBlock = (int)(blockPosition.x - pos.x) + 1;
+            int yBlock = (int)(blockPosition.y - pos.y);
+            int zBlock = (int)(blockPosition.z - pos.z);
+            // зачем-то нужно прибавл€ть 1 по оси X, хз почему так, но именно так работает
+            byte hitBlockID = chunck.blocks[xBlock, yBlock, zBlock];
+
+            chunck.blocks[xBlock, yBlock, zBlock] = item.ID;
+
+            var mesh = generator.UpdateMesh(chunck);//, (int)pos.x, (int)pos.y, (int)pos.z);
+            chunck.meshFilter.mesh = mesh;
+            chunck.collider.sharedMesh = mesh;
+
+            for (int p = 0; p < 6; p++)
+            {
+                var blockPos = new Vector3(xBlock, yBlock, zBlock);
+
+                Vector3 checkingBlockPos = blockPos + World.faceChecks[p];
+                var blockInOtherChunckPos = checkingBlockPos + pos;
+
+
+                if (!IsBlockChunk((int)checkingBlockPos.x, (int)checkingBlockPos.y, (int)checkingBlockPos.z))
+                {
+                    var otherChunck = generator.GetChunk(checkingBlockPos + pos);
+
+                    var otherMesh = generator.UpdateMesh(otherChunck);
+                    otherChunck.meshFilter.mesh = otherMesh;
+                    otherChunck.collider.sharedMesh = otherMesh;
+                }
+            }
+            //print(item);
+            player.inventory.RemoveItem(item);
+
         }
     }
 

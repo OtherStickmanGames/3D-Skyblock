@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class SlotView : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class SlotView : MonoBehaviour
     {
         UpdateSlot();
     }
+
 
     public void SetItem(InventoryItem item)
     {
@@ -37,9 +39,22 @@ public class SlotView : MonoBehaviour
     public void UpdateSlot()
     {
         if (Item != null)
+        {
             txtCount.text = Item.count > 1 ? $"x{Item.count}" : "";
+
+            if(Item.count == 0)
+            {
+                foreach (Transform view in itemParent)
+                {
+                    Destroy(view.gameObject);
+                }
+                Item = null;
+            }
+        }
         else
+        {
             txtCount.text = string.Empty;
+        }
     }
 
     Vector3 Rotation(byte id)

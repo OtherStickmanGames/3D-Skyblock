@@ -9,11 +9,11 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         inventory = new(this);
+
     }
 
     private void Start()
     {
         EventsHolder.onPlayerSpawnAny?.Invoke(this);
-
     }
 }

@@ -40,7 +40,7 @@ public class BlockItemSpawner : IUpdateble
         {
             var dist = Vector3.Distance(player.transform.position, data.view.transform.position);
 
-            if (dist < 3)
+            if (dist < 3 && player.inventory.AvailabelTake(data))
             {
                 var dir = player.transform.position - data.view.transform.position;
                 dir.Normalize();

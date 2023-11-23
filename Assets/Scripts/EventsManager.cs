@@ -122,15 +122,21 @@ public class EventsHolder
 
     ////-----------------------------------------------------------------------
     
-    public class RuneTaked : UnityEvent<Player> { }
+    public class QuickInventoryItemSelect : UnityEvent<Player, InventoryItem> { }
 
-    public static RuneTaked runeTaked = new();
+    public static QuickInventoryItemSelect onQuickInventoryItemSelect = new();
 
     ////-----------------------------------------------------------------------
 
     public class QuickInventoryAddItem : UnityEvent<Player, InventoryItem> { }
 
     public static QuickInventoryAddItem onQuickInventoryAddItem = new();
+
+    ////-----------------------------------------------------------------------
+
+    public class QuickInventoryRemoveItem : UnityEvent<Player, InventoryItem> { }
+
+    public static QuickInventoryRemoveItem onQuickInventoryRemoveItem = new();
 
     ////-----------------------------------------------------------------------
 

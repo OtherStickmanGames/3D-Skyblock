@@ -18,8 +18,14 @@ public class QuickSlotsView : MonoBehaviour
         this.owner = owner;
 
         EventsHolder.onQuickInventoryAddItem.AddListener(QuickInventoryItem_Added);
+        EventsHolder.onQuickInventoryRemoveItem.AddListener(QuickInventoryItem_Removed);
 
         CreateSlots();
+    }
+
+    private void Update()
+    {
+        KeyboardInput();
     }
 
     private void QuickInventoryItem_Added(Player player, InventoryItem item)
@@ -27,7 +33,8 @@ public class QuickSlotsView : MonoBehaviour
         if (player != owner)
             return;
 
-        var slot = slots.Find(s => s.Item != null && s.Item.ID == item.ID);
+        var slot = slots.Find(s => s.Item != null && s.Item == item);
+        //print(slot);
         if (slot != null)
         {
             slot.UpdateSlot();
@@ -42,7 +49,15 @@ public class QuickSlotsView : MonoBehaviour
         }
     }
 
-   
+    private void QuickInventoryItem_Removed(Player player, InventoryItem item)
+    {
+        if (player != owner)
+            return;
+
+        var slot = slots.Find(s => s.Item != null && s.Item == item);
+        slot.UpdateSlot();
+    }
+
     void CreateSlots()
     {
         Clear();
@@ -50,9 +65,51 @@ public class QuickSlotsView : MonoBehaviour
         for (int i = 0; i < owner.inventory.CountQuickSlots; i++)
         {
             var view = Instantiate(slotViewPrefab, parent);
+            view.name = view.name.Insert(0, $"{i}:");
             view.Init();
             slots.Add(view);
         }
+    }
+
+    void SelectSlot(SlotView slot)
+    {
+        EventsHolder.onQuickInventoryItemSelect.Invoke(owner, slot.Item);
+    }
+
+    
+
+    void KeyboardInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SelectSlot(slots[0]);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SelectSlot(slots[1]);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SelectSlot(slots[2]);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SelectSlot(slots[3]);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            SelectSlot(slots[4]);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            SelectSlot(slots[5]);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            SelectSlot(slots[6]);
+        }
+
+        
     }
 
     void Clear()
@@ -63,3 +120,5 @@ public class QuickSlotsView : MonoBehaviour
         }
     }
 }
+
+

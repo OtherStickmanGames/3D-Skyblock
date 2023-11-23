@@ -47,14 +47,14 @@ public class BlockUVS
     {
         switch (id)
         {
-            case 1:
+            case 1:// Трава
                 return new BlockUVS(0, 15, 3, 15, 2, 15);
             case 2:// Камень
                 return new BlockUVS(1, 15);
             case 3:// Булыжник
                 return new BlockUVS(0, 14);
-            case 4:
-                return new BlockUVS(0, 0);
+            case 4:// Земля
+                return new BlockUVS(2, 15);
             case 5:
                 return new BlockUVS(1, 1);
             case 6:// Угольная руда

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static BLOCKS;
 
 public class WorldGenerator : MonoBehaviour
 {
@@ -133,6 +134,10 @@ public class WorldGenerator : MonoBehaviour
                 for (int z = 0; z < size; z++)
                 {
                     chunck.blocks[x, y, z] = procedural.GetBlockID(x + posX, y + posY, z + posZ);//GeneratedBlockID(x + posX, y + posY, z + posZ);
+                    if(chunck.blocks[x, y, z] == DIRT && procedural.GetBlockID(x + posX, y + posY + 1, z + posZ) == 0)
+                    {
+                        chunck.blocks[x, y, z] = 1;
+                    }
                 }
             }
         }

@@ -23,7 +23,7 @@ public class Inventory
     private void Item_Selected(Player owner, InventoryItem item)
     {
         CurrentSelectedItem = item;
-        Debug.Log(item);
+        //Debug.Log(item);
     }
 
     //private void Item_Selected(InventoryItem item)

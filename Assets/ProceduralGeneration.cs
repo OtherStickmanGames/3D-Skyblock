@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static BLOCKS;
 
 public class ProceduralGeneration : MonoBehaviour
 {
@@ -64,14 +65,41 @@ public class ProceduralGeneration : MonoBehaviour
 
         if (noiseValue > landThresold)
         {
-            if (noiseValue > 0.5f)
+            if (noiseValue > landThresold + 0.05f)
             {
-                blockID = 1;
+                blockID = STONE;
             }
             else
             {
-                blockID = 2;
+                blockID = DIRT;
             }
+        }
+
+
+        // ==========================================
+
+        // =========== Шаманим ============
+        k = 10000;
+
+        offset = new(Random.value * k, Random.value * k, Random.value * k);
+
+        var scale = noiseScale - 30;
+        noiseX = Mathf.Abs((float)(x + offset.x) / scale);
+        noiseY = Mathf.Abs((float)(y + offset.y) / scale);
+        noiseZ = Mathf.Abs((float)(z + offset.z) / scale);
+
+        float noiseAlterValue = SimplexNoise.Noise.Generate(noiseX, noiseY, noiseZ);
+
+        //noiseValue += (30 - y) / 30f;// World bump
+        //noiseValue /= y / 8f;
+
+        //cavernas /= y / 19f;
+        //cavernas /= 2;
+        //Debug.Log($"{noiseValue} --- {y}");
+
+        if (blockID == 0 && noiseAlterValue > landThresold+0.15f)
+        {
+            blockID = STONE;
         }
         // ==========================================
 

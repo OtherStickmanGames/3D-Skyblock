@@ -26,11 +26,10 @@ public class Inventory
         //Debug.Log(item);
     }
 
-    //private void Item_Selected(InventoryItem item)
-    //{
-    //    CurrentSelectedItem = item;
-    //    print(item);
-    //}
+    public void AddItem(InventoryItem item)
+    {
+        AddItem(item.ID, item.view);
+    }
 
     public void AddItem(byte ID, GameObject view)
     {
@@ -45,9 +44,11 @@ public class Inventory
         }
         else
         {
+            var itemData = GameManager.Inst.ItemsData.Find(i => i.ID == ID);
             var newItem = new InventoryItem()
             {
                 ID = ID,
+                name = itemData?.name,
                 view = view,
                 count = 1,
                 stackSize = stackSize,

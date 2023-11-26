@@ -18,4 +18,12 @@ public class UI : MonoBehaviour
     {
         HUD.Init(mine);
     }
+
+    public static void ClearParent(Transform parent)
+    {
+        foreach (Transform item in parent)
+        {
+            Destroy(item.gameObject);
+        }
+    }
 }

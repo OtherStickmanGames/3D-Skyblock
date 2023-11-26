@@ -6,6 +6,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public List<Player> players = new();
+    [SerializeField] List<GameItemData> itemsData;
+
+    public List<GameItemData> ItemsData => itemsData;
 
     public static GameManager Inst;
 

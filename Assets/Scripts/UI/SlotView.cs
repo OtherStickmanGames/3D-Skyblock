@@ -6,12 +6,13 @@ using System;
 
 public class SlotView : MonoBehaviour
 {
+    [SerializeField] protected TMP_Text title;
     [SerializeField] Transform itemParent;
     [SerializeField] TMP_Text txtCount;
 
     public InventoryItem Item { get; private set; }
 
-    public void Init()
+    public virtual void Init()
     {
         UpdateSlot();
     }
@@ -19,6 +20,7 @@ public class SlotView : MonoBehaviour
 
     public void SetItem(InventoryItem item)
     {
+
         item.view.transform.SetParent(itemParent, false);
         item.view.transform.localPosition = Vector3.zero;
         item.view.transform.localRotation = Quaternion.Euler(Rotation(item.ID));
@@ -34,6 +36,11 @@ public class SlotView : MonoBehaviour
         txtCount.text = item.count > 1 ? $"x{item.count}" : "";
 
         Item = item;
+    }
+
+    public void RemoveItem()
+    {
+        Item = null;
     }
 
     public void UpdateSlot()

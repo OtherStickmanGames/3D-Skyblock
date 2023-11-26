@@ -72,10 +72,22 @@ public class DragDropSlots : MonoBehaviour
                     if (hit.gameObject)
                     {
                         var slot = hit.gameObject.GetComponent<SlotView>();
+                        
                         if(slot && slot != startSlot)
                         {
+                            // Проверяем что мы переместили в слот экепировки
+                            if(slot is EquipmentSlot)
+                            {
+                                var equipSlot = slot as EquipmentSlot;
+                                if(equipSlot.Purpose != dragable.itemPurpose)
+                                {
+                                    break;
+                                }
+                            }
+
                             slot.SetItem(dragable);
                             startSlot.RemoveItem();
+                            break;
                         }
                     }
                 }

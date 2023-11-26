@@ -9,6 +9,7 @@ public class InventoryItem
     public GameObject view;
     public bool isStackable;
     public int stackSize;
+    public ItemPurpose itemPurpose;
 
     public int count;
 }
@@ -28,4 +29,13 @@ public class GameItemData : InventoryItem
             count = count
         };
     }
+}
+
+
+public enum ItemPurpose
+{
+    Item,
+    BackEquip,
+    HandsEquip,
+    Block
 }

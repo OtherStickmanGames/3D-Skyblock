@@ -1,18 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Jetpack : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    Player owner;
+
+    private void Start()
     {
-        
+        EventsHolder.onJetpackEquiped.AddListener(Jetpack_Equiped);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Jetpack_Equiped(Player player, InventoryItem item)
     {
-        
+        owner = player;
+        var view = Instantiate(gameObject, owner.SpineItemHolder);
+        GameManager.SetLayerByChild(view, 0);
     }
 }

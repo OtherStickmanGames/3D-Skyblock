@@ -28,4 +28,16 @@ public class GameManager : MonoBehaviour
     {
         players.Add(player);
     }
+
+    public static void SetLayerByChild(GameObject go, int layer)
+    {
+        if (go.transform.childCount == 0)
+            return;
+
+        foreach (Transform t in go.transform)
+        {
+            t.gameObject.layer = layer;
+            SetLayerByChild(t.gameObject, layer);
+        }
+    }
 }

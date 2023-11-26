@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,14 +26,22 @@ public class EquipmentView : MonoBehaviour
         {
             var slotView = Instantiate(equipmentSlotPrefab, parent);
             slotView.Init(data);
+            slotView.onEquip.AddListener(Item_Equiped);
         }
     }
 
+    private void Item_Equiped(InventoryItem item)
+    {
+        if (item.ID == ITEMS.JETPACK)
+        {
+            EventsHolder.onJetpackEquiped?.Invoke(owner, item);
+        }
+    }
 
     [System.Serializable]
     public class EquipmentSlotData
     {
         public string title;
-        
+        public ItemPurpose itemPurpose;
     }
 }

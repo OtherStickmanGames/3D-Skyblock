@@ -67,9 +67,9 @@ public class EventsHolder
 
     ////-----------------------------------------------------------------------
 
-    //public class TeamPicked : UnityEvent<HealthComponent> { }
+    public class JetpackEquiped : UnityEvent<Player, InventoryItem> { }
 
-    //public static TeamPicked teamPicked = new();
+    public static JetpackEquiped onJetpackEquiped = new();
 
     ////-----------------------------------------------------------------------
 

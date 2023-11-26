@@ -996,7 +996,9 @@ MonoBehaviour:
   parent: {fileID: 7470920294870277952}
   slotsData:
   - title: Back
+    itemPurpose: 1
   - title: Hands
+    itemPurpose: 2
 --- !u!222 &3809228909032042760
 CanvasRenderer:
   m_ObjectHideFlags: 0

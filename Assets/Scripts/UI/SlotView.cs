@@ -18,7 +18,7 @@ public class SlotView : MonoBehaviour
     }
 
 
-    public void SetItem(InventoryItem item)
+    public virtual void SetItem(InventoryItem item)
     {
 
         item.view.transform.SetParent(itemParent, false);
@@ -41,6 +41,7 @@ public class SlotView : MonoBehaviour
     public void RemoveItem()
     {
         Item = null;
+        UpdateSlot();
     }
 
     public void UpdateSlot()

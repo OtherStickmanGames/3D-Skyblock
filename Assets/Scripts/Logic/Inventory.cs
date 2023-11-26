@@ -49,6 +49,7 @@ public class Inventory
             {
                 ID = ID,
                 name = itemData?.name,
+                itemPurpose = itemData?.itemPurpose ?? ItemPurpose.Block,
                 view = view,
                 count = 1,
                 stackSize = stackSize,
